@@ -105,7 +105,7 @@ export default function Hero() {
   }, [imagesLoaded, images, frameIndex]);
 
   return (
-    <div ref={containerRef} className="h-[800vh] w-full relative">
+    <div ref={containerRef} className="h-[800vh] w-full relative" style={{ position: "relative" }}>
       <div className="sticky top-0 h-screen w-full overflow-hidden bg-brand-pink">
         {/* Loader while images are caching */}
         {!imagesLoaded && (
