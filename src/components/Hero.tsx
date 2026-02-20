@@ -49,18 +49,40 @@ export default function Hero() {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
+    // Helper to draw image covering the canvas (like object-cover)
+    const drawImageCover = (img: HTMLImageElement) => {
+      const canvasRatio = canvas.width / canvas.height;
+      const imgRatio = img.width / img.height;
+
+      let drawWidth, drawHeight, offsetX = 0, offsetY = 0;
+
+      if (canvasRatio > imgRatio) {
+        // Canvas is wider than image, fit to width
+        drawWidth = canvas.width;
+        drawHeight = canvas.width / imgRatio;
+        offsetY = (canvas.height - drawHeight) / 2;
+      } else {
+        // Canvas is taller than image, fit to height
+        drawHeight = canvas.height;
+        drawWidth = canvas.height * imgRatio;
+        offsetX = (canvas.width - drawWidth) / 2;
+      }
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
+    };
+
     // Draw initial frame if we are at the top
     const initialFrame = images[0];
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
-    ctx.drawImage(initialFrame, 0, 0, canvas.width, canvas.height);
+    drawImageCover(initialFrame);
 
     // Subscribe to scroll changes
     const unsubscribe = frameIndex.on("change", (latest) => {
       const index = Math.round(latest);
       if (images[index]) {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.drawImage(images[index], 0, 0, canvas.width, canvas.height);
+        drawImageCover(images[index]);
       }
     });
 
@@ -70,7 +92,7 @@ export default function Hero() {
       canvas.height = window.innerHeight;
       const index = Math.round(frameIndex.get());
       if (images[index]) {
-        ctx.drawImage(images[index], 0, 0, canvas.width, canvas.height);
+        drawImageCover(images[index]);
       }
     };
 
