@@ -1,0 +1,54 @@
+@import "tailwindcss";
+
+@theme inline {
+  /* Vibrant, kid pink + sky blue color palette */
+  --color-brand-pink: #FF9CEE;
+  --color-brand-pink-dark: #FF66D8;
+  --color-brand-skyblue: #87CEEB;
+  --color-brand-skyblue-dark: #38bdf8;
+  --color-brand-dark: #2B2D42;
+  --color-brand-white: #FDFFFC;
+
+  --color-background: var(--brand-pink);
+  --color-foreground: var(--brand-dark);
+
+  --font-sans: var(--font-nunito), "Comic Sans MS", sans-serif;
+
+  /* Playful animations */
+  --animate-bounce-slow: bounce 3s infinite;
+  --animate-wiggle: wiggle 1s ease-in-out infinite;
+
+  @keyframes wiggle {
+
+    0%,
+    100% {
+      transform: rotate(-3deg);
+    }
+
+    50% {
+      transform: rotate(3deg);
+    }
+  }
+}
+
+body {
+  background-color: var(--color-brand-white);
+  color: var(--color-brand-dark);
+  font-family: var(--font-sans);
+  /* Removed overflow-x: hidden to prevent breaking the sticky effect in some browsers */
+}
+
+/* Hide scrollbar for cleaner look but keep functionality */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-brand-pink);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-brand-skyblue-dark);
+  border-radius: 6px;
+  border: 3px solid var(--color-brand-pink);
+}
