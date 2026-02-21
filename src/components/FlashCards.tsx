@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
 
 const cards = [
@@ -22,14 +23,16 @@ const cards = [
 ];
 
 export default function FlashCards() {
+    const [flippedId, setFlippedId] = useState<number | null>(null);
+
     return (
         <section className="py-24 px-8 bg-brand-white relative overflow-hidden">
             <div className="max-w-6xl mx-auto">
                 <motion.div
-                    initial={{ opacity: 0, scale: 0.9 }}
+                    initial={{ opacity: 0, scale: 0.95 }}
                     whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true, margin: "-100px" }}
-                    transition={{ duration: 0.5 }}
+                    viewport={{ once: true, margin: "100px", amount: 0 }}
+                    transition={{ duration: 0.2 }}
                     className="text-center mb-16"
                 >
                     <h2 className="text-5xl md:text-7xl font-black text-brand-skyblue-dark drop-shadow-sm mb-4">
@@ -44,12 +47,13 @@ export default function FlashCards() {
                     {cards.map((card, index) => (
                         <motion.div
                             key={card.id}
-                            initial={{ opacity: 0, y: 50 }}
+                            initial={{ opacity: 0, y: 30 }}
                             whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: index * 0.1, type: "spring" }}
+                            viewport={{ once: true, margin: "100px", amount: 0 }}
+                            transition={{ delay: index * 0.05, type: "spring", duration: 0.4 }}
                             className="relative w-full aspect-[4/3] group cursor-pointer"
                             style={{ perspective: "1000px" }}
+                            onClick={() => setFlippedId(flippedId === card.id ? null : card.id)}
                         >
                             <div
                                 className="w-full h-full relative transition-all duration-700 rounded-3xl"
@@ -57,7 +61,7 @@ export default function FlashCards() {
                             >
                                 {/* Front of Card */}
                                 <div
-                                    className={`absolute inset-0 backface-hidden flex items-center justify-center rounded-3xl border-8 ${card.color === 'bg-gray-800' ? 'border-brand-skyblue' : 'border-white'} shadow-[0_15px_30px_rgba(0,0,0,0.15)] group-hover:[transform:rotateY(180deg)] transition-transform duration-700 ${card.color} p-6`}
+                                    className={`absolute inset-0 backface-hidden flex items-center justify-center rounded-3xl border-8 ${card.color === 'bg-gray-800' ? 'border-brand-skyblue' : 'border-white'} shadow-[0_15px_30px_rgba(0,0,0,0.15)] group-hover:[transform:rotateY(180deg)] transition-transform duration-700 ${card.color} p-6 ${flippedId === card.id ? '![transform:rotateY(180deg)]' : ''}`}
                                     style={{ backfaceVisibility: "hidden" }}
                                 >
                                     <span className="text-2xl md:text-3xl font-black text-white drop-shadow-md text-center">
@@ -67,7 +71,7 @@ export default function FlashCards() {
 
                                 {/* Back of Card */}
                                 <div
-                                    className={`absolute inset-0 backface-hidden flex items-center justify-center rounded-3xl border-8 border-brand-pink bg-white shadow-[0_15px_30px_rgba(0,0,0,0.15)] [transform:rotateY(-180deg)] group-hover:[transform:rotateY(0deg)] transition-transform duration-700 p-6`}
+                                    className={`absolute inset-0 backface-hidden flex items-center justify-center rounded-3xl border-8 border-brand-pink bg-white shadow-[0_15px_30px_rgba(0,0,0,0.15)] [transform:rotateY(-180deg)] group-hover:[transform:rotateY(0deg)] transition-transform duration-700 p-6 ${flippedId === card.id ? '![transform:rotateY(0deg)]' : ''}`}
                                     style={{ backfaceVisibility: "hidden" }}
                                 >
                                     <span className="text-xl md:text-2xl font-extrabold text-brand-dark text-center">

@@ -18,10 +18,10 @@ export default function CartoonsList() {
 
             <div className="max-w-6xl mx-auto relative z-10">
                 <motion.div
-                    initial={{ opacity: 0, y: 50 }}
+                    initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: "-100px" }}
-                    transition={{ duration: 0.8 }}
+                    viewport={{ once: true, margin: "100px", amount: 0 }}
+                    transition={{ duration: 0.3 }}
                     className="text-center mb-16"
                 >
                     <h2 className="text-5xl md:text-7xl font-black text-white drop-shadow-md mb-6">
@@ -36,10 +36,10 @@ export default function CartoonsList() {
                     {cartoons.map((cartoon, index) => (
                         <motion.div
                             key={cartoon.id}
-                            initial={{ opacity: 0, scale: 0.8 }}
+                            initial={{ opacity: 0, scale: 0.9 }}
                             whileInView={{ opacity: 1, scale: 1 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: index * 0.1, type: "spring", stiffness: 100 }}
+                            viewport={{ once: true, margin: "100px", amount: 0 }}
+                            transition={{ delay: index * 0.05, type: "spring", stiffness: 150 }}
                             whileHover={{ y: -15, scale: 1.05, rotate: index % 2 === 0 ? 2 : -2 }}
                             className="bg-white rounded-3xl p-8 shadow-[0_10px_0_0_rgba(135,206,235,1)] hover:shadow-[0_20px_0_0_rgba(135,206,235,1)] border-4 border-brand-skyblue cursor-pointer transition-all duration-300 group flex flex-col"
                         >

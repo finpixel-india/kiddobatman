@@ -11,6 +11,7 @@ export default function Hero() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [images, setImages] = useState<HTMLImageElement[]>([]);
   const [imagesLoaded, setImagesLoaded] = useState(false);
+  const [loadProgress, setLoadProgress] = useState(0);
 
   // Load images on mount
   useEffect(() => {
@@ -24,6 +25,7 @@ export default function Hero() {
       img.src = `/images/frames/ezgif-frame-${frameNumber}.jpg`;
       img.onload = () => {
         loadedCount++;
+        setLoadProgress(Math.round((loadedCount / FRAME_COUNT) * 100));
         if (loadedCount === FRAME_COUNT) {
           setImagesLoaded(true);
         }
@@ -76,7 +78,9 @@ export default function Hero() {
     const initialFrame = images[0];
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
-    drawImageCover(initialFrame);
+    if (initialFrame) {
+      drawImageCover(initialFrame);
+    }
 
     // Subscribe to scroll changes
     const unsubscribe = frameIndex.on("change", (latest) => {
@@ -109,8 +113,20 @@ export default function Hero() {
       <div className="sticky top-0 h-screen w-full overflow-hidden bg-brand-pink">
         {/* Loader while images are caching */}
         {!imagesLoaded && (
-          <div className="absolute inset-0 flex items-center justify-center text-white z-10 text-3xl font-black animate-pulse bg-brand-skyblue">
-            Loading Magic... 🌟✨
+          <div className="absolute inset-0 flex flex-col items-center justify-center text-white z-10 font-black bg-brand-skyblue">
+            <div className="text-4xl md:text-6xl mb-4 animate-pulse">
+              Loading Magic... 🌟✨
+            </div>
+            <div className="text-2xl md:text-4xl text-brand-pink-dark">
+              {loadProgress}%
+            </div>
+            {/* Simple progress bar */}
+            <div className="w-64 h-4 bg-white/30 rounded-full mt-6 overflow-hidden">
+              <div
+                className="h-full bg-brand-pink-dark transition-all duration-200 ease-out"
+                style={{ width: `${loadProgress}%` }}
+              ></div>
+            </div>
           </div>
         )}
         <canvas

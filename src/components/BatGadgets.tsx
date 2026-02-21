@@ -20,10 +20,10 @@ export default function BatGadgets() {
 
             <div className="max-w-6xl mx-auto relative z-10">
                 <motion.div
-                    initial={{ opacity: 0, scale: 0.9 }}
+                    initial={{ opacity: 0, scale: 0.95 }}
                     whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true, margin: "-100px" }}
-                    transition={{ duration: 0.5 }}
+                    viewport={{ once: true, margin: "100px", amount: 0 }}
+                    transition={{ duration: 0.2 }}
                     className="text-center mb-16"
                 >
                     <h2 className="text-5xl md:text-7xl font-black text-white drop-shadow-md mb-4">
@@ -38,10 +38,10 @@ export default function BatGadgets() {
                     {gadgets.map((gadget, index) => (
                         <motion.div
                             key={gadget.id}
-                            initial={{ opacity: 0, y: 50 }}
+                            initial={{ opacity: 0, y: 30 }}
                             whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: index * 0.1, type: "spring", stiffness: 100 }}
+                            viewport={{ once: true, margin: "100px", amount: 0 }}
+                            transition={{ delay: index * 0.05, type: "spring", stiffness: 150 }}
                             whileHover={{ scale: 1.1, rotate: index % 2 === 0 ? 5 : -5, y: -15 }}
                             whileTap={{ scale: 0.95 }}
                             className={`${gadget.bg} rounded-3xl p-8 border-4 border-white cursor-pointer shadow-[0_15px_0_0_rgba(255,255,255,0.3)] hover:shadow-[0_25px_0_0_rgba(255,255,255,0.5)] transition-shadow duration-300 flex flex-col items-center text-center`}
